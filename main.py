@@ -39,51 +39,73 @@ def calculate_change(user_sum_coins, price):
 def fill_in_ingredients():
     return(resources)
 
+def consumption_ingredience(name_of_drink, ingredience):
+    ingredience["water"] = ingredience["water"] - MENU[name_of_drink]["ingredients"]["water"]
+    ingredience["milk"] = ingredience["milk"] - MENU[name_of_drink]["ingredients"]["milk"]
+    ingredience["coffee"] = ingredience["coffee"] - MENU[name_of_drink]["ingredients"]["coffee"]
+    print(f"Zbyle ingredience {ingredience}")
+
 def calculate_ingredients(drink_name):
     if drink_name == "espresso":
-        rest_of_ingredience["water"] = rest_of_ingredience["water"] - MENU["espresso"]["ingredients"]["water"]
-        rest_of_ingredience["milk"] = rest_of_ingredience["milk"] - MENU["espresso"]["ingredients"]["milk"]
-        rest_of_ingredience["coffee"] = rest_of_ingredience["coffee"] - MENU["espresso"]["ingredients"]["coffee"]
-        print(f"Zbyle ingredience {rest_of_ingredience}")
+        consumption_ingredience(drink_name, rest_of_ingredience)
     elif drink_name == "latte":
-        rest_of_ingredience["water"] = rest_of_ingredience["water"] - MENU["latte"]["ingredients"]["water"]
-        rest_of_ingredience["milk"] = rest_of_ingredience["milk"] - MENU["latte"]["ingredients"]["milk"]
-        rest_of_ingredience["coffee"] = rest_of_ingredience["coffee"] - MENU["latte"]["ingredients"]["coffee"]
-        print(f"Zbyle ingredience {rest_of_ingredience}")
+        consumption_ingredience(drink_name, rest_of_ingredience)
     elif drink_name == "cappuccino":
-        rest_of_ingredience["water"] = rest_of_ingredience["water"] - MENU["cappuccino"]["ingredients"]["water"]
-        rest_of_ingredience["milk"] = rest_of_ingredience["milk"] - MENU["cappuccino"]["ingredients"]["milk"]
-        rest_of_ingredience["coffee"] = rest_of_ingredience["coffee"] - MENU["cappuccino"]["ingredients"]["coffee"]
-        print(f"Zbyle ingredience {rest_of_ingredience}")
-
+        consumption_ingredience(drink_name, rest_of_ingredience)
+        
+        
+def ingredience_checker(in_water, in_milk, in_coffee):
+    if in_water < 0:
+        print("Nemame dostatek ingredienci na tento napoj")
+        return False
+    elif in_milk < 0:
+        print("Nemame dostatek ingredienci na tento napoj")
+        return False
+    elif in_coffee < 0:
+        print("Nemame dostatek ingredienci na tento napoj")
+        return False
+    else:
+        print("Na vas napoj mame dostatek ingredienci")
+        return True
 
 
 # ==Kod automatu==
-# Volba uzivatele, jaky chce napoj
-user_choice = input("Co byste si dal/a? (espresso/latte/cappuccino): ")
-
 # Nacitame puvodni mnozstvi ingredienci
 rest_of_ingredience = fill_in_ingredients()
 
+lets_continue = True
 
-# Vypocita, kolik zbyva ingredienci
-calculate_ingredients(user_choice)
+while(lets_continue):
+    # Volba uzivatele, jaky chce napoj
+    user_choice = input("Co byste si dal/a? (espresso/latte/cappuccino): ")
+
+    # Vypocita, kolik zbyva ingredienci
+    calculate_ingredients(user_choice)
+
+    # Kontrola, zda mame dostatek ingredienci
+    if user_choice != "report":
+        lets_continue = ingredience_checker(rest_of_ingredience["water"], rest_of_ingredience["milk"], rest_of_ingredience["coffee"])
+
+    # Ma kod dale pokracovat?
+    if lets_continue == False:
+        break
 
 
-# Kontrolni report
-if user_choice == "report":
-    report(rest_of_ingredience)
+    # Kontrolni report
+    if user_choice == "report":
+        report(rest_of_ingredience)
 
-# Hlavni kod automatu
-if user_choice == "espresso":
-    sum = coins()
-    print(f"Cena espressa je {espresso_price}")
-    calculate_change(sum, espresso_price)
-elif user_choice == "latte":
-    sum = coins()
-    print(f"Cena latte je {latte_price}")
-    calculate_change(sum, latte_price)
-elif user_choice == "cappuccino":
-    sum = coins()
-    print(f"Cena cappuccina je {cappuccino_price}")
-    calculate_change(sum, cappuccino_price)
+
+    # Hlavni kod automatu
+    if user_choice == "espresso":
+        sum = coins()
+        print(f"Cena espressa je {espresso_price}")
+        calculate_change(sum, espresso_price)
+    elif user_choice == "latte":
+        sum = coins()
+        print(f"Cena latte je {latte_price}")
+        calculate_change(sum, latte_price)
+    elif user_choice == "cappuccino":
+        sum = coins()
+        print(f"Cena cappuccina je {cappuccino_price}")
+        calculate_change(sum, cappuccino_price)
