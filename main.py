@@ -44,9 +44,17 @@ def calculate_ingredients(drink_name):
         rest_of_ingredience["water"] = rest_of_ingredience["water"] - MENU["espresso"]["ingredients"]["water"]
         rest_of_ingredience["milk"] = rest_of_ingredience["milk"] - MENU["espresso"]["ingredients"]["milk"]
         rest_of_ingredience["coffee"] = rest_of_ingredience["coffee"] - MENU["espresso"]["ingredients"]["coffee"]
-        print(f"Zbyle ingredience: {rest_of_ingredience}")
-
-
+        print(f"Zbyle ingredience {rest_of_ingredience}")
+    elif drink_name == "latte":
+        rest_of_ingredience["water"] = rest_of_ingredience["water"] - MENU["latte"]["ingredients"]["water"]
+        rest_of_ingredience["milk"] = rest_of_ingredience["milk"] - MENU["latte"]["ingredients"]["milk"]
+        rest_of_ingredience["coffee"] = rest_of_ingredience["coffee"] - MENU["latte"]["ingredients"]["coffee"]
+        print(f"Zbyle ingredience {rest_of_ingredience}")
+    elif drink_name == "cappuccino":
+        rest_of_ingredience["water"] = rest_of_ingredience["water"] - MENU["cappuccino"]["ingredients"]["water"]
+        rest_of_ingredience["milk"] = rest_of_ingredience["milk"] - MENU["cappuccino"]["ingredients"]["milk"]
+        rest_of_ingredience["coffee"] = rest_of_ingredience["coffee"] - MENU["cappuccino"]["ingredients"]["coffee"]
+        print(f"Zbyle ingredience {rest_of_ingredience}")
 
 
 
@@ -55,7 +63,12 @@ def calculate_ingredients(drink_name):
 user_choice = input("Co byste si dal/a? (espresso/latte/cappuccino): ")
 
 # Nacitame puvodni mnozstvi ingredienci
-rest_of_ingredience = fill_in_ingredients
+rest_of_ingredience = fill_in_ingredients()
+
+
+# Vypocita, kolik zbyva ingredienci
+calculate_ingredients(user_choice)
+
 
 # Kontrolni report
 if user_choice == "report":
